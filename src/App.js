@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const initialFriends = [
   {
     id: 118836,
@@ -20,8 +22,16 @@ const initialFriends = [
 ];
 
 
+function Button({children,onClick}){
+  return <button className="button" onClick={onClick}>{children}</button>
+}
+
+
+
+
 export default function App(){
 
+  const [showAddFriend,setShowAddFriend]=useState(false)
 
 
 
@@ -30,8 +40,9 @@ export default function App(){
 
 
 
-
-
+  function handleShowAddFriend(){
+    setShowAddFriend((show)=> !show)
+  }
 
 
 
@@ -48,11 +59,40 @@ export default function App(){
     <div className="app">
       <div className="sidebar">
         <FriendList/>
-
+        {showAddFriend && <FormAddFriend/>}
+        <Button onClick={handleShowAddFriend}>{showAddFriend ? "Close" : "Add friend"}</Button>
       </div>
+
+      <FormSplitBill/>
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function FriendList(){
   const friends=initialFriends
@@ -79,5 +119,134 @@ function Friend({friend}){
     {friend.balance >0 && <p className="green">{friend.name} owes you {Math.abs(friend.balance)}</p>}
 
     {friend.balance ===0 && <p className="green">you and {friend.name} are even</p>}
+
+    <Button className="button">Select</Button>
   </li>
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function FormAddFriend(){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  return (
+  <form>
+    <label>Friend Name</label>
+    <input type="text"/>
+
+    <lbel>Image Url</lbel>
+    <input type="text"/>
+
+    <Button>Add</Button>
+  </form>
+  )
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function FormSplitBill(){
+  return <form className="form-split-bill">
+    <h2>Split a Bill with X</h2>
+
+    <label>💵 Bill value</label>
+    <input type="text"/>
+
+    <label>🤯 Your Expenses</label>
+    <input type="text"/>
+
+
+    <label>🤱 X's Expenses</label>
+    <input type="text" disabled/>
+
+
+    <label>Who is paying the Bill?</label>
+    <select>
+      <option value='user'>You</option>
+      <option value='friend'>X</option>
+    </select>
+
+    <Button>Split the Bill</Button>
+  </form>
+}
+
+
+
+
+
+
